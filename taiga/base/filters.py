@@ -531,7 +531,6 @@ class TagsFilter(FilterBackend):
 
         for mode, prepare_method in operations.items():
             query = self._get_tags_queryparams(request.QUERY_PARAMS, mode=mode)
-            print(query)
             if query:
                 queryset = queryset.filter(prepare_method(query))
 

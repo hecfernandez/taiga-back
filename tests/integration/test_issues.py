@@ -482,8 +482,6 @@ def test_mulitple_exclude_filter_tags(client):
     client.login(data["users"][0])
     tags = data["tags"]
 
-    print(tags)
-
     url = "{}?project={}&exclude_tags={},{}".format(reverse('issues-list'), project.id, tags[1], tags[2])
     response = client.get(url)
     assert response.status_code == 200
