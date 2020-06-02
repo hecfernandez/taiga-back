@@ -303,9 +303,15 @@ class UserStoryExportSerializer(CustomAttributesValuesExportSerializerMixin,
         return [user.email for user in obj.assigned_users.all()]
 
 
+class EpicRelatedUserStoryProjectExportSerializer(RelatedExportSerializer):
+    name = Field()
+    slug = Field()
+
+
 class EpicRelatedUserStoryExportSerializer(RelatedExportSerializer):
     user_story = SlugRelatedField(slug_field="ref")
     order = Field()
+    project = EpicRelatedUserStoryProjectExportSerializer()
 
 
 class EpicExportSerializer(CustomAttributesValuesExportSerializerMixin,
