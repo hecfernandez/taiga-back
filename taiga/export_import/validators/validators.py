@@ -292,19 +292,26 @@ class EpicRelatedUserStoryExportValidator(validators.ModelValidator):
     user_story = ProjectRelatedField(slug_field="ref")
     order = serializers.IntegerField()
     project_slug = serializers.CharField(required=False)
+    origin_project_slug = serializers.CharField(required=False)
 
-    def validate_project_slug(self, attrs, source):
-        if attrs[source] != self.context['project'].slug:
+    def validate_origin_project_slug(self, attrs, source):
+        print(attrs[source], attrs['project_slug'])
+        if attrs[source] != attrs['project_slug']:
             msg = _("Epic has a related story from an external project ({})  and cannot be imported".format(
                 attrs[source]
             ))
             raise ValidationError(msg)
+
         attrs.pop(source)
+        attrs.pop("project_slug")
         return attrs
 
     class Meta:
         model = epics_models.RelatedUserStory
-        extra_kwargs = {'project_slug': {'write_only': True}}
+        extra_kwargs = {
+            'project_slug': {'write_only': True},
+            'origin_project_slug': {'write_only': True},
+        }
         exclude = ('id', 'epic')
 
 

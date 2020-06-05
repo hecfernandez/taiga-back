@@ -307,8 +307,12 @@ class EpicRelatedUserStoryExportSerializer(RelatedExportSerializer):
     user_story = SlugRelatedField(slug_field="ref")
     order = Field()
     project_slug = MethodField()
+    origin_project_slug = MethodField()
 
     def get_project_slug(self, obj):
+        return obj.epic.project.slug
+
+    def get_origin_project_slug(self, obj):
         return obj.user_story.project.slug
 
 
