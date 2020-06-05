@@ -303,19 +303,13 @@ class UserStoryExportSerializer(CustomAttributesValuesExportSerializerMixin,
         return [user.email for user in obj.assigned_users.all()]
 
 
-class EpicRelatedUserStoryProjectExportSerializer(RelatedExportSerializer):
-    name = Field()
-    slug = Field()
-
-
 class EpicRelatedUserStoryExportSerializer(RelatedExportSerializer):
     user_story = SlugRelatedField(slug_field="ref")
     order = Field()
-    project = MethodField()
+    project_slug = MethodField()
 
-    def get_project(self, obj):
-        return EpicRelatedUserStoryProjectExportSerializer(obj.user_story.project).data
-
+    def get_project_slug(self, obj):
+        return obj.user_story.project.slug
 
 
 class EpicExportSerializer(CustomAttributesValuesExportSerializerMixin,
