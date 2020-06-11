@@ -294,10 +294,8 @@ class EpicRelatedUserStoryExportValidator(validators.ModelValidator):
     source_project_slug = serializers.CharField(required=False)
 
     def validate_source_project_slug(self, attrs, source):
-        if attrs[source] is not None and attrs[source] is not "":
-            msg = _("A Epic has a related story from an external project ({})  and cannot be imported".format(
-                attrs[source]
-            ))
+        if attrs[source] is not None and attrs[source] != "":
+            msg = _("A Epic has a related story from an external project (%(project)s)  and cannot be imported") % {"project": attrs[source]}
             raise ValidationError(msg)
 
         attrs.pop(source)
