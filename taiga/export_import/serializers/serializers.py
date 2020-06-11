@@ -309,7 +309,7 @@ class EpicRelatedUserStoryExportSerializer(RelatedExportSerializer):
     source_project_slug = MethodField()
 
     def get_source_project_slug(self, obj):
-        if obj.epic.project.slug != obj.user_story.project.slug
+        if obj.epic.project.slug != obj.user_story.project.slug:
             return obj.user_story.project.slug
 
         return None
