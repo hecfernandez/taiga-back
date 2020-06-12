@@ -41,4 +41,9 @@ class PromoteToUserStoryMixin:
         ret = promote_to_us(obj)
         self.persist_history_snapshot(obj=obj)
 
+        # delete source task if required
+        model_class = obj.__class__
+        if  model_class.__name__ == "Task":
+            obj.delete()
+
         return response.Ok(ret)

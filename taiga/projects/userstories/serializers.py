@@ -81,6 +81,7 @@ class UserStoryListSerializer(ProjectExtraInfoSerializerMixin,
     comment = MethodField()
     origin_issue = OriginItemSerializer(attr="generated_from_issue")
     origin_task = OriginItemSerializer(attr="generated_from_task")
+    from_task_info = Field()
     epics = MethodField()
     epic_order = MethodField()
     tasks = MethodField()
