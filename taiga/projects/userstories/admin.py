@@ -52,8 +52,7 @@ class UserStoryAdmin(admin.ModelAdmin):
         return self.obj
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if (db_field.name in ["status", "milestone", "generated_from_issue",
-                              "generated_from_task"]
+        if (db_field.name in ["status", "milestone", "generated_from_issue"]
                 and getattr(self, 'obj', None)):
             kwargs["queryset"] = db_field.related_model.objects.filter(
                                                       project=self.obj.project)

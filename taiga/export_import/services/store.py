@@ -338,7 +338,7 @@ def store_user_story(project, data):
         data["status"] = project.default_us_status.name
 
     us_data = {key: value for key, value in data.items() if key not in
-               ["role_points", "custom_attributes_values", 'generated_from_task', 'generated_from_issue']}
+               ["role_points", "custom_attributes_values", 'from_task_info', 'generated_from_issue']}
 
     validator = validators.UserStoryExportValidator(data=us_data, context={"project": project})
 
@@ -407,14 +407,8 @@ def store_user_stories_related_entities(imported_user_stories,
                                         data):
     for us_data in data.get("user_stories", []):
         us = imported_user_stories.get(us_data.get('ref'))
-        if not us or \
-                not (us_data.get('generated_from_task')
-                     or us_data.get('generated_from_issue')):
+        if not us or not (us_data.get('generated_from_issue')):
             continue
-
-        if us_data.get('generated_from_task'):
-            generated_from_task_ref = int(us_data.get('generated_from_task'))
-            us.generated_from_task = imported_tasks.get(generated_from_task_ref)
 
         if us_data.get('generated_from_issue'):
             generated_from_issue_ref = int(us_data.get('generated_from_issue'))

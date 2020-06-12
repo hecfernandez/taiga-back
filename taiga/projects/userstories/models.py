@@ -136,10 +136,6 @@ class UserStory(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, Due
                                              on_delete=models.SET_NULL,
                                              related_name="generated_user_stories",
                                              verbose_name=_("generated from issue"))
-    generated_from_task = models.ForeignKey("tasks.Task", null=True, blank=True,
-                                             on_delete=models.SET_NULL,
-                                             related_name="generated_user_stories",
-                                             verbose_name=_("generated from task"))
     from_task_info = models.TextField(null=True, blank=True, verbose_name=_("from task info"))
     external_reference = ArrayField(models.TextField(null=False, blank=False),
                                     null=True, blank=True, default=None, verbose_name=_("external reference"))

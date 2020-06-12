@@ -120,8 +120,7 @@ class UserStoryViewSet(AssignedUsersSignalMixin, OCCResourceMixin,
         if not self.request.QUERY_PARAMS.get('dashboard', False):
             qs = qs.select_related("milestone",
                                    "owner",
-                                   "generated_from_issue",
-                                   "generated_from_task")
+                                   "generated_from_issue")
 
             qs = qs.prefetch_related("assigned_users")
             include_attachments = "include_attachments" in self.request.QUERY_PARAMS
@@ -263,7 +262,7 @@ class UserStoryViewSet(AssignedUsersSignalMixin, OCCResourceMixin,
 
         # Added comment to the origin (issue)
         if response.status_code == status.HTTP_201_CREATED:
-            for generated_from in ['generated_from_issue', 'generated_from_task']:
+            for generated_from in ['generated_from_issue']:
                 generator = getattr(self.object, generated_from)
                 if generator:
                     generator.save()

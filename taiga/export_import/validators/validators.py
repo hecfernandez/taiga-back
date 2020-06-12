@@ -325,12 +325,11 @@ class UserStoryExportValidator(WatcheableObjectModelValidatorMixin):
     milestone = ProjectRelatedField(slug_field="name", required=False)
     modified_date = serializers.DateTimeField(required=False)
     generated_from_issue = ProjectRelatedField(slug_field="ref", required=False)
-    generated_from_task = ProjectRelatedField(slug_field="ref", required=False)
     due_date = serializers.DateTimeField(required=False)
 
     class Meta:
         model = userstories_models.UserStory
-        exclude = ('id', 'project', 'points', 'tasks')
+        exclude = ('id', 'project', 'points', 'tasks', 'from_task_info')
 
     def custom_attributes_queryset(self, project):
         if project.id not in _custom_userstories_attributes_cache:
