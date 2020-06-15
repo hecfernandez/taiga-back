@@ -407,8 +407,6 @@ def issue_freezer(issue) -> dict:
 
 
 def task_freezer(task) -> dict:
-    promoted_to = list(task.generated_user_stories.values_list("id", flat=True))
-
     snapshot = {
         "ref": task.ref,
         "owner": task.owner_id,
@@ -429,7 +427,6 @@ def task_freezer(task) -> dict:
         "blocked_note_html": mdrender(task.project, task.blocked_note),
         "custom_attributes": extract_task_custom_attributes(task),
         "due_date": str(task.due_date) if task.due_date else None,
-        "promoted_to": promoted_to,
     }
 
     return snapshot
