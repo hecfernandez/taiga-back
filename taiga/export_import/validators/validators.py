@@ -295,7 +295,7 @@ class EpicRelatedUserStoryExportValidator(validators.ModelValidator):
 
     def validate_source_project_slug(self, attrs, source):
         if attrs[source] is not None and attrs[source] != "":
-            msg = _("A Epic has a related story from an external project (%(project)s)  and cannot be imported") % {"project": attrs[source]}
+            msg = _("An Epic has a related story from an external project (%(project)s)  and cannot be imported") % {"project": attrs[source]}
             raise ValidationError(msg)
 
         attrs.pop(source)
