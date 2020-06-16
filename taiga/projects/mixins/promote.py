@@ -42,7 +42,7 @@ class PromoteToUserStoryMixin:
         self.persist_history_snapshot(obj=obj)
 
         # delete source task if required
-        if obj.__class__ == "Task":
+        if obj.__class__.__name__ == "Task":
             obj.delete()
 
         return response.Ok(ret)

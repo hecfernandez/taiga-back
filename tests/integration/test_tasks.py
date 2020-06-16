@@ -1145,5 +1145,5 @@ def test_promote_task_to_us(client):
     assert us_response.data["total_comments"] == 2
 
     # check if task is deleted
-    assert us_response.data["from_task_info"] == us.from_task_info
+    assert us_response.data["from_task_ref"] == us.from_task_ref
     assert not Task.objects.filter(pk=task.id).exists()
