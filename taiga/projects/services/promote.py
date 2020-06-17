@@ -40,7 +40,7 @@ def promote_to_us(source_obj):
     for obj in queryset:
         us = UserStory.objects.create(
             generated_from_issue_id=obj.id if model_class.__name__ == "Issue" else None,
-            from_task_ref = _("Task #(%(ref)s)") % {"ref": obj.ref} if model_class.__name__ == "Task" else None,
+            from_task_ref = _("Task #%(ref)s") % {"ref": obj.ref} if model_class.__name__ == "Task" else None,
             project=obj.project,
             owner=obj.owner,
             subject=obj.subject,
