@@ -22,8 +22,10 @@ from taiga.projects.attachments.models import Attachment
 from taiga.projects.history.models import HistoryEntry
 from taiga.projects.history.services import (get_history_queryset_by_model_instance,
                                              make_key_from_model_object)
+from taiga.projects.issues.models import Issue
 from taiga.projects.notifications.models import Watched
 from taiga.projects.notifications.utils import attach_watchers_to_queryset
+from taiga.projects.tasks.models import Task
 from taiga.projects.userstories.models import UserStory
 
 
@@ -39,8 +41,8 @@ def promote_to_us(source_obj):
     us_refs = []
     for obj in queryset:
         us = UserStory.objects.create(
-            generated_from_issue_id=obj.id if model_class.__name__ == "Issue" else None,
-            from_task_ref = _("Task #%(ref)s") % {"ref": obj.ref} if model_class.__name__ == "Task" else None,
+            generated_from_issue_id=obj.id if isinstance(source_obj, Issue) else None,
+            from_task_ref = _("Task #%(ref)s") % {"ref": obj.ref} if isinstance(source_obj, Task) else None,
             project=obj.project,
             owner=obj.owner,
             subject=obj.subject,
@@ -48,6 +50,14 @@ def promote_to_us(source_obj):
             tags=obj.tags,
             milestone=obj.milestone,
         )
+
+        # add data only for task conversion
+        if isinstance(source_obj, Task):
+            us.due_date = obj.due_date
+            us.due_date_reason = obj.due_date_reason
+            us.is_blocked = obj.is_blocked
+            us.blocked_note = obj.blocked_note
+            us.save()
 
         content_type = apps.get_model("contenttypes", "ContentType").objects.get_for_model(us)
 

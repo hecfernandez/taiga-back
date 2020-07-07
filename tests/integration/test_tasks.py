@@ -1143,6 +1143,9 @@ def test_promote_task_to_us(client):
     assert us_response.data["total_watchers"] == 2
     assert us_response.data["total_attachments"] == 1
     assert us_response.data["total_comments"] == 2
+    assert us_response.data["due_date"] == task.due_date
+    assert us_response.data["is_blocked"] == task.is_blocked
+    assert us_response.data["blocked_note"] == task.blocked_note
 
     # check if task is deleted
     assert us_response.data["from_task_ref"] == us.from_task_ref
