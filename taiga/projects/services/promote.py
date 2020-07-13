@@ -89,6 +89,7 @@ def _import_comments(source_obj, target_obj):
             values=entry.values,
             comment=entry.comment,
             comment_html=entry.comment_html,
+            delete_comment_date=entry.delete_comment_date,
             is_hidden=False,
             is_snapshot=False,
             created_at=entry.created_at
